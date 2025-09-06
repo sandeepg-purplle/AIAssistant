@@ -1,0 +1,139 @@
+# Personal Assistant Configuration File
+
+# Gemini Integration Settings
+gemini:
+  # Get API key from https://aistudio.google.com/apikey
+  api_key: ${GEMINI_API_KEY}
+  model: "gemini-pro"
+  
+  # Use local LLM instead of Gemini API
+  use_local_llm: false
+  local_llm_endpoint: "http://localhost:11434"  # Ollama default
+  local_llm_model: "llama2"
+  
+  # Gemini CLI integration
+  gemini_cli_path: "gemini"  # Path to gemini CLI executable
+  use_gemini_cli: true
+
+# Browser Automation Settings
+browser:
+  default_browser: "chrome"  # chrome, firefox, edge
+  headless: false  # Set to true for background operation
+  timeout: 30  # seconds
+  
+  # Chrome-specific settings
+  chrome_options:
+    - "--no-sandbox"
+    - "--disable-dev-shm-usage"
+    - "--disable-gpu"
+    # Add more Chrome options as needed
+  
+  # Firefox-specific settings  
+  firefox_options:
+    - "--no-sandbox"
+    # Add more Firefox options as needed
+
+# System Command Settings
+system:
+  safe_mode: true  # Only allow safe commands
+  
+  # Directories the assistant can access
+  allowed_directories:
+    - "~/Desktop"
+    - "~/Documents" 
+    - "~/Downloads"
+    - "~/Pictures"
+    - "."  # Current directory
+  
+  # Maximum execution time for commands (seconds)
+  max_execution_time: 300
+  
+  # Commands that are always allowed (beyond the default safe commands)
+  additional_safe_commands:
+    - "git status"
+    - "git log --oneline -10"
+    - "npm list"
+    - "pip list"
+
+# Learning and Adaptation Settings
+learning:
+  enabled: true
+  data_file: "/tmp/assistant_learning.json"
+  
+  # Learn from user behavior
+  track_user_patterns: true
+  
+  # Improve responses based on success/failure
+  adaptive_responses: true
+  
+  # Store successful command sequences
+  cache_successful_sequences: true
+
+# Security Settings  
+security:
+  # Credential storage (use system keyring)
+  use_system_keyring: true
+  
+  # Encrypt stored credentials
+  encrypt_credentials: true
+  
+  # Maximum number of failed authentication attempts
+  max_auth_attempts: 3
+  
+  # Require confirmation for destructive actions
+  confirm_destructive_actions: true
+
+# Logging Settings
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  file: "/tmp/personal_assistant.log"
+  max_file_size_mb: 10
+  backup_count: 5
+
+# Advanced Agent Settings
+agents:
+  system_agent:
+    enabled: true
+    timeout: 60
+  
+  browser_agent:
+    enabled: true
+    timeout: 120
+    
+  # Future agents can be configured here
+  # email_agent:
+  #   enabled: false
+  #   imap_server: "imap.gmail.com"
+  
+  # calendar_agent:
+  #   enabled: false
+  #   calendar_service: "google"
+
+# Integration Settings
+integrations:
+  # n8n workflow automation
+  n8n:
+    enabled: false
+    webhook_url: "http://localhost:5678/webhook/assistant"
+  
+  # Slack integration
+  slack:
+    enabled: false
+    bot_token: ${SLACK_BOT_TOKEN}
+    
+  # Discord integration  
+  discord:
+    enabled: false
+    bot_token: ${DISCORD_BOT_TOKEN}
+
+# Performance Settings
+performance:
+  # Maximum concurrent agent executions
+  max_concurrent_agents: 3
+  
+  # Cache results for repeated queries
+  cache_results: true
+  cache_ttl_minutes: 60
+  
+  # Rate limiting
+  rate_limit_requests_per_minute: 60
